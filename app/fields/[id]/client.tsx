@@ -160,7 +160,7 @@ export default function FieldDetailPage() {
               </Button>
               
               <p className="text-xs text-center text-muted-foreground mt-4">
-                Không cần thanh toán trước. Bạn sẽ thanh toán tại sân bóng.
+                Thanh toán tiền mặt tại sân bóng hoặc qua Internet Banking.
               </p>
             </div>
           </div>

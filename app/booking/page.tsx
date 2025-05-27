@@ -26,6 +26,7 @@ enum BookingStep {
   CONFIRMATION = 4,
 }
 
+export const dynamic = "force-dynamic";
 export default function BookingPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
