@@ -142,7 +142,7 @@ export default function BookingPage() {
         return (
           <div className="space-y-4">
             <h2 className="text-xl font-semibold mb-4">Chọn giờ</h2>
-            
+            Thanh toán tại sân trước trận đấu của bạn
             <div>
               <h3 className="text-sm font-medium mb-2">Giờ bắt đầu</h3>
               <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
@@ -264,6 +264,7 @@ export default function BookingPage() {
                       ? "border-2 border-primary bg-primary/5"
                       : "border border-border hover:border-primary/50"
                   )}
+                  onClick={() => setPaymentMethod("cash")}
                 >
                   <RadioGroupItem value="cash" id="cash" />
                   <div className="flex items-center space-x-4">
@@ -271,7 +272,7 @@ export default function BookingPage() {
                       <Wallet className="h-6 w-6 text-green-600" />
                     </div>
                     <div>
-                      <Label htmlFor="cash" className="text-base font-medium">Tiền mặt</Label>
+                      <Label htmlFor="cash" className="text-base font-medium cursor-pointer">Tiền mặt</Label>
                       <p className="text-sm text-muted-foreground">Thanh toán tại sân trước trận đấu của bạn</p>
                     </div>
                   </div>
@@ -284,6 +285,7 @@ export default function BookingPage() {
                       ? "border-2 border-primary bg-primary/5"
                       : "border border-border hover:border-primary/50"
                   )}
+                  onClick={() => setPaymentMethod("bank")}
                 >
                   <RadioGroupItem value="bank" id="bank" />
                   <div className="flex items-center space-x-4">
@@ -291,7 +293,7 @@ export default function BookingPage() {
                       <CreditCard className="h-6 w-6 text-blue-600" />
                     </div>
                     <div>
-                      <Label htmlFor="bank" className="text-base font-medium">Internet Banking</Label>
+                      <Label htmlFor="bank" className="text-base font-medium cursor-pointer">Internet Banking</Label>
                       <p className="text-sm text-muted-foreground">Thanh toán qua chuyển khoản ngân hàng</p>
                     </div>
                   </div>
