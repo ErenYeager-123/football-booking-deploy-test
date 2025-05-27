@@ -53,7 +53,7 @@ export default function RootLayout({
                     <div>
                       <h4 className="font-semibold mb-4">Hỗ trợ</h4>
                       <ul className="space-y-2">
-                        <li><a href="/faq" className="text-sm hover:text-primary">FAQs</a></li>
+                        <li><a href="/faq" className="text-sm hover:text-primary">Câu hỏi thường gặp</a></li>
                         <li><a href="/contact" className="text-sm hover:text-primary">Liên hệ chúng tôi</a></li>
                         <li><a href="/help" className="text-sm hover:text-primary">Trung tâm hỗ trợ</a></li>
                       </ul>
