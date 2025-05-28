@@ -73,15 +73,15 @@ export default function RegisterPage() {
     <div className="min-h-screen pt-24 pb-12 flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
+          <CardTitle className="text-2xl font-bold">Tạo một tài khoản</CardTitle>
           <CardDescription>
-            Enter your information to create a new account
+            Nhập thông tin của bạn để tạo tài khoản mới.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name">Họ Tên</Label>
               <Input
                 id="name"
                 placeholder="John Smith"
@@ -104,7 +104,7 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Mật khẩu</Label>
               <Input
                 id="password"
                 type="password"
@@ -115,7 +115,7 @@ export default function RegisterPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Xác nhận mật khẩu</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -131,9 +131,9 @@ export default function RegisterPage() {
               {isLoading ? "Creating account..." : "Register"}
             </Button>
             <div className="text-center text-sm">
-              Already have an account?{" "}
+              Đã có tài khoản?{" "}
               <Link href="/login" className="text-primary hover:underline">
-                Login
+                Đăng nhập
               </Link>
             </div>
           </CardFooter>

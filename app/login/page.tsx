@@ -55,7 +55,7 @@ export default function LoginPage() {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Đăng nhập</CardTitle>
           <CardDescription>
-            Nhập email và mật khẩu của bạn để đăng nhập vào tài khoản của bạn.
+            Nhập email và mật khẩu để đăng nhập vào tài khoản của bạn.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>

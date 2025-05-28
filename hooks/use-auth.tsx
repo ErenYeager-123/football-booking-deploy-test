@@ -46,14 +46,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(foundUser);
       localStorage.setItem("user", JSON.stringify(foundUser));
       toast({
-        title: "Login successful",
-        description: `Welcome back, ${foundUser.name}!`,
+        title: "Đăng nhập thành công",
+        description: `Chào mừng quay trở lại, ${foundUser.name}!`,
       });
       return true;
     } else {
       toast({
-        title: "Login failed",
-        description: "Invalid email or password",
+        title: "Đăng nhập thất bại",
+        description: "Email hoặc mật khẩu không chính xác",
         variant: "destructive",
       });
       return false;
@@ -72,8 +72,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const existingUser = mockUsers.find((u) => u.email === email);
     if (existingUser) {
       toast({
-        title: "Registration failed",
-        description: "Email already in use",
+        title: "Đăng ký thất bại",
+        description: "Email đã được sử dụng",
         variant: "destructive",
       });
       return false;
@@ -96,8 +96,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("user", JSON.stringify(newUser));
     
     toast({
-      title: "Registration successful",
-      description: "Your account has been created",
+      title: "Đăng ký thành công",
+      description: "Tài khoản của bạn đã được tạo thành công",
     });
     
     return true;
@@ -107,8 +107,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     localStorage.removeItem("user");
     toast({
-      title: "Logged out",
-      description: "You have been successfully logged out",
+      title: "Đã đăng xuất",
+      description: "Bạn đã đăng xuất thành công",
     });
   };
 
