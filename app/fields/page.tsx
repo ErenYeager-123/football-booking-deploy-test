@@ -109,7 +109,7 @@ export default function FieldsPage() {
             </div>
             <div>
               <label className="text-sm font-medium mb-1 block">
-                Tiện nghinghi
+                Tiện nghi
               </label>
               <Select value={amenitiesFilter} onValueChange={setAmenitiesFilter}>
                 <SelectTrigger>
