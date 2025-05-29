@@ -87,9 +87,9 @@ export default function FieldsPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="any">Kích cỡ bất kì</SelectItem>
-                  <SelectItem value="5-a-side">Sân 5 người</SelectItem>
-                  <SelectItem value="7-a-side">Sân 7 người</SelectItem>
-                  <SelectItem value="11-a-side">Sân 11 người</SelectItem>
+                  <SelectItem value="Sân 5 người">Sân 5 người</SelectItem>
+                  <SelectItem value="Sân 7 người">Sân 7 người</SelectItem>
+                  <SelectItem value="Sân 11 người">Sân 11 người</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -109,7 +109,7 @@ export default function FieldsPage() {
             </div>
             <div>
               <label className="text-sm font-medium mb-1 block">
-                Tiện nghinghi
+                Tiện nghi
               </label>
               <Select value={amenitiesFilter} onValueChange={setAmenitiesFilter}>
                 <SelectTrigger>
@@ -117,9 +117,9 @@ export default function FieldsPage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="any">Tiện nghi bất kì</SelectItem>
-                  <SelectItem value="Changing Rooms">Phòng thay đồ</SelectItem>
-                  <SelectItem value="Floodlights">Đèn chiếu sáng</SelectItem>
-                  <SelectItem value="Parking">Gửi xe</SelectItem>
+                  <SelectItem value="Phòng thay đồ">Phòng thay đồ</SelectItem>
+                  <SelectItem value="Đèn chiều sáng">Đèn chiếu sáng</SelectItem>
+                  <SelectItem value="Gửi xe">Gửi xe</SelectItem>
                 </SelectContent>
               </Select>
             </div>

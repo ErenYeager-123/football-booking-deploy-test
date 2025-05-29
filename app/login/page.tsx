@@ -53,9 +53,9 @@ export default function LoginPage() {
     <div className="min-h-screen pt-24 pb-12 flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Login</CardTitle>
+          <CardTitle className="text-2xl font-bold">Đăng nhập</CardTitle>
           <CardDescription>
-            Enter your email and password to access your account
+            Nhập email và mật khẩu để đăng nhập vào tài khoản của bạn.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
@@ -74,12 +74,12 @@ export default function LoginPage() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Mật khẩu</Label>
                 <Link
                   href="/forgot-password"
                   className="text-sm text-primary hover:underline"
                 >
-                  Forgot password?
+                  Quên mật khẩu?
                 </Link>
               </div>
               <Input
@@ -97,9 +97,9 @@ export default function LoginPage() {
               {isLoading ? "Logging in..." : "Login"}
             </Button>
             <div className="text-center text-sm">
-              Don&apos;t have an account?{" "}
+              Không có tài khoản?{" "}
               <Link href="/register" className="text-primary hover:underline">
-                Register
+                Đăng ký
               </Link>
             </div>
           </CardFooter>
