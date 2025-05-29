@@ -334,7 +334,7 @@ export default function BookingPage() {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Ngày:</span>
-                  <span className="font-medium">{date ? format(date, "PPP") : ""}</span>
+                  <span className="font-medium">{date ? format(date, "PPP", { locale: vi }) : ""}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Giờ:</span>
