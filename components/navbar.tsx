@@ -142,7 +142,7 @@ export default function Navbar() {
               <>
                 <Button variant="outline" asChild>
                   <Link href="/dashboard" onClick={closeMenu}>
-                    Lịch sử đặt sânsân
+                    Lịch sử đặt sân
                   </Link>
                 </Button>
                 <Button variant="outline" asChild>
