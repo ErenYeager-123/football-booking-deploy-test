@@ -118,7 +118,7 @@ export default function FieldsPage() {
                 <SelectContent>
                   <SelectItem value="any">Tiện nghi bất kì</SelectItem>
                   <SelectItem value="Phòng thay đồ">Phòng thay đồ</SelectItem>
-                  <SelectItem value="Đèn chiều sáng">Đèn chiếu sáng</SelectItem>
+                  <SelectItem value="Đèn chiếu sáng">Đèn chiếu sáng</SelectItem>
                   <SelectItem value="Gửi xe">Gửi xe</SelectItem>
                 </SelectContent>
               </Select>
