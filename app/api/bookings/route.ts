@@ -27,8 +27,54 @@ export async function POST(request: Request) {
   try {
     const json = await request.json();
 
+    // Check if the field is available for the requested time slot
+    const existingBooking = await prisma.booking.findFirst({
+      where: {
+        fieldId: json.fieldId,
+        date: json.date,
+        NOT: {
+          status: 'Đã hủy',
+        },
+        OR: [
+          {
+            AND: [
+              { startTime: { lte: json.startTime } },
+              { endTime: { gt: json.startTime } },
+            ],
+          },
+          {
+            AND: [
+              { startTime: { lt: json.endTime } },
+              { endTime: { gte: json.endTime } },
+            ],
+          },
+          {
+            AND: [
+              { startTime: { gte: json.startTime } },
+              { endTime: { lte: json.endTime } },
+            ],
+          },
+        ],
+      },
+    });
+
+    if (existingBooking) {
+      return NextResponse.json(
+        { error: 'Field is not available for the selected time slot' },
+        { status: 400 }
+      );
+    }
+
     const booking = await prisma.booking.create({
-      data: json,
+      data: {
+        userId: json.userId,
+        fieldId: json.fieldId,
+        date: json.date,
+        startTime: json.startTime,
+        endTime: json.endTime,
+        totalPrice: json.totalPrice,
+        paymentMethod: json.paymentMethod,
+      },
       include: {
         user: true,
         field: true,

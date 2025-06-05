@@ -24,7 +24,16 @@ export async function POST(request: Request) {
     const json = await request.json();
 
     const field = await prisma.field.create({
-      data: json,
+      data: {
+        name: json.name,
+        description: json.description,
+        location: json.location,
+        imageUrl: json.imageUrl,
+        pricePerHour: json.pricePerHour,
+        size: json.size,
+        amenities: json.amenities,
+        isAvailable: json.isAvailable ?? true,
+      },
     });
 
     return NextResponse.json(field);

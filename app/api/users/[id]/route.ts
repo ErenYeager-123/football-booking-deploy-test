@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 export async function GET(
   request: Request,
@@ -9,6 +10,18 @@ export async function GET(
     const user = await prisma.user.findUnique({
       where: {
         id: params.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        isAdmin: true,
+        createdAt: true,
+        bookings: {
+          include: {
+            field: true,
+          },
+        },
       },
     });
 
@@ -35,12 +48,25 @@ export async function PATCH(
 ) {
   try {
     const json = await request.json();
+    const data: any = { ...json };
+
+    // If password is being updated, hash it
+    if (json.password) {
+      data.password = await bcrypt.hash(json.password, 10);
+    }
 
     const updatedUser = await prisma.user.update({
       where: {
         id: params.id,
       },
-      data: json,
+      data,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        isAdmin: true,
+        createdAt: true,
+      },
     });
 
     return NextResponse.json(updatedUser);

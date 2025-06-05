@@ -10,6 +10,9 @@ export async function GET(
       where: {
         id: params.id,
       },
+      include: {
+        bookings: true,
+      },
     });
 
     if (!field) {
