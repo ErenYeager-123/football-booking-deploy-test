@@ -7,7 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { mockBookings, mockFields, mockUsers } from "@/lib/mock-data";
 import { useAuth } from "@/hooks/use-auth";
 import { Field } from "@/types/field";
 import { Booking } from "@/types/booking";
@@ -52,15 +51,34 @@ export default function AdminPage() {
       return;
     }
 
-    // Simulate API calls
-    const fetchData = () => {
+    const fetchData = async () => {
       setLoading(true);
-      setTimeout(() => {
-        setFields(mockFields);
-        setBookings(mockBookings);
-        setUsers(mockUsers);
+      try {
+        const [fieldsRes, bookingsRes, usersRes] = await Promise.all([
+          fetch('/api/fields'),
+          fetch('/api/bookings'),
+          fetch('/api/users')
+        ]);
+
+        const [fieldsData, bookingsData, usersData] = await Promise.all([
+          fieldsRes.json(),
+          bookingsRes.json(),
+          usersRes.json()
+        ]);
+
+        setFields(fieldsData);
+        setBookings(bookingsData);
+        setUsers(usersData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast({
+          title: "Error",
+          description: "Failed to fetch data",
+          variant: "destructive",
+        });
+      } finally {
         setLoading(false);
-      }, 1000);
+      }
     };
 
     fetchData();
@@ -93,6 +111,115 @@ export default function AdminPage() {
   const getUserName = (userId: string) => {
     const user = users.find(u => u.id === userId);
     return user ? user.name : "Unknown User";
+  };
+
+  const handleAddField = async (formData: FormData) => {
+    const fieldData = {
+      name: formData.get('name'),
+      location: formData.get('location'),
+      pricePerHour: parseInt(formData.get('price') as string),
+      size: formData.get('size'),
+      description: "New field",
+      imageUrl: "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg",
+      amenities: ["Phòng thay đồ", "Đèn chiếu sáng"],
+      isAvailable: true
+    };
+
+    try {
+      const response = await fetch('/api/fields', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(fieldData),
+      });
+
+      if (!response.ok) throw new Error('Failed to add field');
+
+      const newField = await response.json();
+      setFields([...fields, newField]);
+      toast({
+        title: "Success",
+        description: "Field added successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add field",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteField = async (fieldId: string) => {
+    try {
+      const response = await fetch(`/api/fields/${fieldId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Failed to delete field');
+
+      setFields(fields.filter(f => f.id !== fieldId));
+      toast({
+        title: "Success",
+        description: "Field deleted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete field",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleUpdateBookingStatus = async (bookingId: string, status: string) => {
+    try {
+      const response = await fetch(`/api/bookings/${bookingId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) throw new Error('Failed to update booking status');
+
+      const updatedBooking = await response.json();
+      setBookings(bookings.map(b => b.id === bookingId ? updatedBooking : b));
+      toast({
+        title: "Success",
+        description: "Booking status updated successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update booking status",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const response = await fetch(`/api/users/${userId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Failed to delete user');
+
+      setUsers(users.filter(u => u.id !== userId));
+      toast({
+        title: "Success",
+        description: "User deleted successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete user",
+        variant: "destructive",
+      });
+    }
   };
 
   if (loading) {
@@ -176,27 +303,32 @@ export default function AdminPage() {
                   <DialogHeader>
                     <DialogTitle>Thêm sân mới</DialogTitle>
                   </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">Tên</Label>
-                      <Input id="name" className="col-span-3" />
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    handleAddField(new FormData(e.target as HTMLFormElement));
+                  }}>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">Tên</Label>
+                        <Input id="name" name="name" className="col-span-3" required />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="location" className="text-right">Địa điểm</Label>
+                        <Input id="location" name="location" className="col-span-3" required />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="price" className="text-right">Giá/giờ</Label>
+                        <Input id="price" name="price" type="number" className="col-span-3" required />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="size" className="text-right">Kích cỡ sân</Label>
+                        <Input id="size" name="size" className="col-span-3" placeholder="e.g. Sân 5 người" required />
+                      </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="location" className="text-right">Địa điểm</Label>
-                      <Input id="location" className="col-span-3" />
+                    <div className="flex justify-end">
+                      <Button type="submit">Lưu sân</Button>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="price" className="text-right">Giá/giờ</Label>
-                      <Input id="price" type="number" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="size" className="text-right">Kích cỡ sân</Label>
-                      <Input id="size" className="col-span-3" placeholder="e.g. Sân 5 người" />
-                    </div>
-                  </div>
-                  <div className="flex justify-end">
-                    <Button type="submit">Lưu sân</Button>
-                  </div>
+                  </form>
                 </DialogContent>
               </Dialog>
             </div>
@@ -245,7 +377,10 @@ export default function AdminPage() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem>Sửa</DropdownMenuItem>
-                              <DropdownMenuItem className="text-destructive">
+                              <DropdownMenuItem 
+                                className="text-destructive"
+                                onClick={() => handleDeleteField(field.id)}
+                              >
                                 Xóa
                               </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -297,7 +432,7 @@ export default function AdminPage() {
                             }
                             variant="outline"
                           >
-                            {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                            {booking.status}
                           </Badge>
                         </TableCell>
                         <TableCell className="text-right">
@@ -309,9 +444,13 @@ export default function AdminPage() {
                               </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                              <DropdownMenuItem>Xem chi tiết</DropdownMenuItem>
-                              <DropdownMenuItem>Xác nhận</DropdownMenuItem>
-                              <DropdownMenuItem className="text-destructive">
+                              <DropdownMenuItem onClick={() => handleUpdateBookingStatus(booking.id, "Đã xác nhận")}>
+                                Xác nhận
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                className="text-destructive"
+                                onClick={() => handleUpdateBookingStatus(booking.id, "Đã hủy")}
+                              >
                                 Hủy
                               </DropdownMenuItem>
                             </DropdownMenuContent>
@@ -369,7 +508,10 @@ export default function AdminPage() {
                               {!user.isAdmin && (
                                 <DropdownMenuItem>Đặt làm quản trị viên</DropdownMenuItem>
                               )}
-                              <DropdownMenuItem className="text-destructive">
+                              <DropdownMenuItem 
+                                className="text-destructive"
+                                onClick={() => handleDeleteUser(user.id)}
+                              >
                                 Xóa
                               </DropdownMenuItem>
                             </DropdownMenuContent>
