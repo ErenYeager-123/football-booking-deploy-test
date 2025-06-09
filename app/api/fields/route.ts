@@ -31,7 +31,6 @@ export async function POST(request: Request) {
         imageUrl: json.imageUrl,
         pricePerHour: json.pricePerHour,
         size: json.size,
-        amenities: json.amenities,
         isAvailable: json.isAvailable ?? true,
       },
     });

@@ -6,6 +6,5 @@ export interface Field {
   imageUrl: string;
   pricePerHour: number;
   size: string; // e.g., "5-a-side", "7-a-side", "11-a-side"
-  amenities: string[];
   isAvailable: boolean;
 }

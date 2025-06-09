@@ -108,17 +108,6 @@ export default function FieldDetailPage() {
               <h2 className="text-xl font-semibold mb-2">Mô tả</h2>
               <p className="text-muted-foreground">{field.description}</p>
             </div>
-
-            <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-2">Tiện nghi</h2>
-              <div className="flex flex-wrap gap-2">
-                {field.amenities.map((amenity) => (
-                  <Badge key={amenity} variant="outline">
-                    {amenity}
-                  </Badge>
-                ))}
-              </div>
-            </div>
           </div>
 
           <div>

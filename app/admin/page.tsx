@@ -121,7 +121,6 @@ export default function AdminPage() {
       size: formData.get('size'),
       description: "New field",
       imageUrl: "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg",
-      amenities: ["Phòng thay đồ", "Đèn chiếu sáng"],
       isAvailable: true
     };
 

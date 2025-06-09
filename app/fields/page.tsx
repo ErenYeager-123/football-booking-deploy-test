@@ -18,7 +18,6 @@ export default function FieldsPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sizeFilter, setSizeFilter] = useState("any");
   const [priceFilter, setPriceFilter] = useState("any");
-  const [amenitiesFilter, setAmenitiesFilter] = useState("any");
   const [filteredFields, setFilteredFields] = useState(mockFields);
 
   const applyFilters = () => {
@@ -42,17 +41,12 @@ export default function FieldsPage() {
       }
     }
 
-    if (amenitiesFilter !== "any") {
-      filtered = filtered.filter(field => field.amenities.includes(amenitiesFilter));
-    }
-
     setFilteredFields(filtered);
   };
 
   const resetFilters = () => {
     setSizeFilter("any");
     setPriceFilter("any");
-    setAmenitiesFilter("any");
     setFilteredFields(mockFields);
   };
 
@@ -78,7 +72,7 @@ export default function FieldsPage() {
         </div>
 
         {isFilterOpen && (
-          <div className="bg-card p-4 rounded-lg shadow-sm mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-card p-4 rounded-lg shadow-sm mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="text-sm font-medium mb-1 block">Kích cỡ sân</label>
               <Select value={sizeFilter} onValueChange={setSizeFilter}>
@@ -107,23 +101,7 @@ export default function FieldsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <label className="text-sm font-medium mb-1 block">
-                Tiện nghi
-              </label>
-              <Select value={amenitiesFilter} onValueChange={setAmenitiesFilter}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Tiện nghi bất kì" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="any">Tiện nghi bất kì</SelectItem>
-                  <SelectItem value="Phòng thay đồ">Phòng thay đồ</SelectItem>
-                  <SelectItem value="Đèn chiếu sáng">Đèn chiếu sáng</SelectItem>
-                  <SelectItem value="Gửi xe">Gửi xe</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="md:col-span-3 flex justify-end space-x-2 mt-2">
+            <div className="md:col-span-2 flex justify-end space-x-2 mt-2">
               <Button variant="outline" size="sm" onClick={resetFilters}>Đặt lại</Button>
               <Button size="sm" onClick={applyFilters}>Áp dụng bộ lọc</Button>
             </div>
